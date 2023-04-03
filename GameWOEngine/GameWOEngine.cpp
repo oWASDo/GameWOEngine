@@ -1,24 +1,22 @@
 // GameWOEngine.cpp : Questo file contiene la funzione 'main', in cui inizia e termina l'esecuzione del programma.
 //
 
-#include <iostream>
-#include "MathLibrary.h"
+//#include <iostream>
+//#include "MathLibrary.h"
+#include "Game.h"
 
 
 
 int main()
 {
-    std::cout << rr()  << " r " << "int." << std::endl;
+	Game g = Game();
+	if (g.InitWindow())
+	{
+		g.Perform();
+	}
+	g.Clean();
 
-    // Initialize a Fibonacci relation sequence.
-    fibonacci_init(1, 1);
-    // Write out the sequence values until overflow.
-    do {
-        std::cout << fibonacci_index() << ": "
-            << fibonacci_current() << std::endl;
-    } while (fibonacci_next());
-    // Report count of values written before overflow.
-    std::cout << fibonacci_index() + 1 << " Fibonacci sequence values fit in an " << "unsigned 64-bit integer." << std::endl;
+	return 0;
 }
 
 // Per eseguire il programma: CTRL+F5 oppure Debug > Avvia senza eseguire debug
