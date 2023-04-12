@@ -1,22 +1,29 @@
-// GameWOEngine.cpp : Questo file contiene la funzione 'main', in cui inizia e termina l'esecuzione del programma.
-//
 
-//#include <iostream>
-//#include "MathLibrary.h"
 #include "Game.h"
+#include "SDL_main.h"
 
-
-
-int main()
+int SDL_main(int argc, char* argv[])
 {
-	Game g = Game();
-	if (g.InitWindow())
+	Game game = Game();
+	if (game.InitWindow())
 	{
-		g.Perform();
+		Texture* texture = game.AddTexture("./Image/Box.png");
+
+		GameObject* gameobject = game.AddGameObject("GameObject");
+
+		Renderer* renderer = gameobject->AddRenderer();
+		renderer->AddImage(texture);
+
+		Renderer* r = gameobject->GetComponent<Renderer>();
+
+
+		game.Perform();
+
 	}
-	g.Clean();
+	game.Clean();
 
 	return 0;
+
 }
 
 // Per eseguire il programma: CTRL+F5 oppure Debug > Avvia senza eseguire debug

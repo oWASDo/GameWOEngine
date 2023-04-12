@@ -1,15 +1,15 @@
 #pragma once
 
-#ifdef GAMEL_EXPORTS
-#define GAMEL_EXPORTS __declspec(dllexport)
-#else
-#define GAMEL_EXPORTS __declspec(dllimport)
-#endif
+#include "Exporter.h"
+#include <vector>
+#include "SDL.h"
+#include "GameObject.h"
+#include "Renderer.h"
+#include "Transform.h"
 
+class GameObject;
 
-//#include "SDL.h"
-
-class GAMEL_EXPORTS Game
+class ENGIE_EXPORTS Game
 {
 public:
 	Game();
@@ -28,15 +28,28 @@ public:
 
 	void Perform();
 
+	Texture* AddTexture(const char* path);
+	GameObject* AddGameObject(const char* name);
+
+	void RemoveTexture(Texture* texture);
+	void RemoveGameObject(GameObject* gameObject);
+
+	SDL_Renderer* GetRenderer();
+
+	void AddRenderComponent(Renderer* newRenderer);
+
 private:
 
-	void* window;
+	SDL_Window* window;
 
-	void* renderer;
+	SDL_Renderer* renderer;
+
+	std::vector<Texture*> textures;
+	std::vector<GameObject*> gameObject;
+	std::vector<Renderer*> renderers;
 
 	bool isRunning;
 };
-
 
 
 
