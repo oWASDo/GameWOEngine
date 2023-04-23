@@ -20,9 +20,14 @@ class ENGIE_EXPORTS GameObject
 {
 public:
 
+	friend class Game;
+
 	GameObject(const char* name);
+	GameObject();
 
 	~GameObject();
+
+	virtual void Start();
 
 	void AddComponent(Component* newComponent);
 	void RemoveComponent(Component* componentToDelete);
@@ -42,8 +47,14 @@ public:
 	std::string name;
 
 	Component* GetComponent(const char* name);
-private:
 
+	Texture* AddTexture(const char* filePath);
+
+protected:
+	virtual void Init();
+
+
+private:
 
 
 	std::list<Component*> components;

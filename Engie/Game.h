@@ -33,11 +33,17 @@ public:
 
 	void Clean();
 
+	void Time();
+
+
 	void Perform();
+
+	virtual void Start();
 
 	Texture* AddTexture(const char* path);
 
 	GameObject* AddGameObject(const char* name);
+	void AddGameObject(GameObject* newGameObject);
 
 	void RemoveTexture(Texture* texture);
 
@@ -54,6 +60,12 @@ public:
 
 	void SetErroroCode(int newErrorCode);
 	int GetErroroCode();
+
+	//SDL_Texture* LoadImg();
+
+	static float GetDeltaTime() {
+		return delta;
+	}
 
 private:
 
@@ -94,6 +106,9 @@ private:
 	}
 
 	void DeleteGameobject();
+
+	float last_tick_time = 0;
+	static float delta;
 
 };
 

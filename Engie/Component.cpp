@@ -8,25 +8,24 @@
 Component::Component()
 {
 	componentTypeName = "";
-	int i = 0;
+	gameObjectOwner = nullptr;
 }
 
 Component::~Component()
 {
-
 }
 
-void Component::Init() 
+void Component::Init()
 {
 
 }
 
-void Component::Start() 
+void Component::Start()
 {
 
 }
 
-void Component::Update() 
+void Component::Update()
 {
 
 }

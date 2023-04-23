@@ -7,8 +7,10 @@
 Renderer::Renderer()
 {
 	componentTypeName = "Renderer";
+	transform = nullptr;
 	texture = nullptr;
 	rend = nullptr;
+
 	UV_Position = Vector2(0.0f, 0.0f);
 	UV_Scale = Vector2(1.0f, 1.0f);
 }

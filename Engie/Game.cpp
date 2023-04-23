@@ -7,6 +7,9 @@
 Game::Game()
 {
 	errorCode = 0;
+	window = nullptr;
+	renderer = nullptr;
+
 }
 
 Game::~Game()
@@ -57,8 +60,6 @@ void Game::Update() {
 
 		GET_LIST_ELEMENT2(gameObject, GameObject*, i, g);
 		g->Update();
-		//Utils::GetListElement(gameObject, i)->Update();
-		//gameObject.at(i)->Update();
 
 	}
 
@@ -66,8 +67,7 @@ void Game::Update() {
 	{
 		GET_LIST_ELEMENT2(gameObject, GameObject*, i, g);
 		g->DeleteComponent();
-		//Utils::GetListElement(gameObject, i)->DeleteComponent();
-		//gameObject.at(i)->DeleteComponent();
+
 
 	}
 
@@ -86,15 +86,19 @@ void Game::Render() {
 		GET_LIST_ELEMENT2(renderers, Renderer*, i, r);
 		r->Update();
 
-
-
-		//Utils::GetListElement(renderer, i)->Update();
-
-		//Utils::GetListElement(renderers, i)->Update();
-		//renderers.at(i)->Update();
 	}
 
 	SDL_RenderPresent(renderer);
+
+}
+
+float Game::delta = 0;
+
+void Game::Time() {
+	
+	float tick_time = SDL_GetTicks();
+	delta = tick_time - last_tick_time;
+	last_tick_time = tick_time;
 
 }
 
@@ -126,15 +130,25 @@ void Game::Clean()
 
 void Game::Perform()
 {
+	Start();
 	while (isRunning)
 	{
+		Time();
+
 		HandleEvent();
 
 		Update();
 
-
 		Render();
 
+	}
+}
+
+void Game::Start() {
+
+	for (GameObject* g : gameObject)
+	{
+		g->Start();
 	}
 }
 
@@ -143,7 +157,7 @@ Texture* Game::AddTexture(const char* path)
 	int* w = new int();
 	int* h = new int();
 	SDL_Texture* image = LoadPng(path, renderer, w, h);
-	//textures.emplace_back(image);
+
 	if (image != nullptr)
 	{
 		Texture* texture = new Texture(image, *w, *h);
@@ -161,13 +175,19 @@ GameObject* Game::AddGameObject(const char* name)
 {
 	GameObject* newGameObject = new GameObject(name);
 
+	AddGameObject(newGameObject);
+
+	return newGameObject;
+}
+
+void Game::AddGameObject(GameObject* newGameObject)
+{
 	newGameObject->AddGameOwner(this);
 
 	gameObject.emplace_back(newGameObject);
 
+	newGameObject->Init();
 
-
-	return newGameObject;
 }
 
 void Game::RemoveTexture(Texture* texture)
@@ -266,3 +286,20 @@ int Game::GetErroroCode()
 {
 	return errorCode;
 }
+//
+//SDL_Texture* Game::LoadImg(const char* path, SDL_Renderer* rendere, int* width, int* height) {
+//
+//	SDL_Surface* tmpSurface = IMG_Load("./Image/Box.png");
+//
+//	*width = tmpSurface->w;
+//	*height = tmpSurface->h;
+//
+//
+//	const char* CCCC = IMG_GetError();
+//
+//	SDL_Texture* texture = SDL_CreateTextureFromSurface(rendere, tmpSurface);
+//
+//	SDL_FreeSurface(tmpSurface);
+//
+//	return texture;
+//}

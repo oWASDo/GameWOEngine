@@ -2,30 +2,16 @@
 #include "Game.h"
 #include "SDL_main.h"
 #include <list>
-
+#include "Player.h"
 
 
 int SDL_main(int argc, char* argv[])
 {
-
 	Game* game = new Game();
 	if (game->InitWindow())
 	{
-		Texture* texture = game->AddTexture("./Image/Box.png");
-
-		GameObject* gameobject = game->AddGameObject("0");
-		GameObject* gameobject1 = game->AddGameObject("1");
-
-		Renderer* renderer = gameobject->AddRenderer();
-		renderer->AddImage(texture);
-		Renderer* renderer1 = gameobject1->AddRenderer();
-		renderer->AddImage(texture);
-
-		//Renderer* r = GET_COMPONENT_AS_POINTER_BY_TYPE(gameobject, Renderer);
-
-		//gameobject->RemoveComponent(r);
-
-		game->RemoveGameObject(gameobject1);
+		Player* p = new Player();
+		game->AddGameObject(p);
 
 		game->Perform();
 
@@ -34,8 +20,6 @@ int SDL_main(int argc, char* argv[])
 	game->Clean();
 
 	delete game;
-
-	int i = 0;
 
 	return errorCode;
 

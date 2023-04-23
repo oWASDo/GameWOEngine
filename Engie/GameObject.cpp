@@ -9,7 +9,16 @@
 GameObject::GameObject(const char* nameChar)
 {
 	name = nameChar;
-
+	rend = nullptr;
+	transf = nullptr;
+	game = nullptr;
+}
+GameObject::GameObject()
+{
+	name = "";
+	rend = nullptr;
+	transf = nullptr;
+	game = nullptr;
 }
 
 GameObject::~GameObject()
@@ -156,25 +165,15 @@ T* GameObject::GetComponent()
 	return component;
 }
 
-//{
-//	const char* name = typeid(T).name();
-//
-//	for (size_t i = 0; i < components.size(); i++)
-//	{
-//		Component* c = nullptr;
-//
-//		GET_LIST_ELEMENT2(components, Component*, i, c);
-//
-//		if (typeid(T) == typeid(*c))
-//		{
-//			return dynamic_cast<T*>(c);
-//		}
-//	}
-//
-//	return nullptr;
-//
-//}
+void GameObject::Start()
+{
 
+}
+
+void GameObject::Init()
+{
+
+}
 
 Component* GameObject::GetComponent(const char* name)
 {
@@ -188,11 +187,7 @@ Component* GameObject::GetComponent(const char* name)
 	return nullptr;
 }
 
-
-//template ENGIE_EXPORTS
-//Renderer* GameObject::GetComponent();
-//
-//
-//template ENGIE_EXPORTS
-//Transform* GameObject::GetComponent();
-
+Texture* GameObject::AddTexture(const char* filePath)
+{
+	return game->AddTexture(filePath);
+}
