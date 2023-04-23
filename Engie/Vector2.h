@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Exporter.h"
 
 class ENGIE_EXPORTS Vector2

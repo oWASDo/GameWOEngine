@@ -10,7 +10,11 @@ Texture::Texture(SDL_Texture* newImage, const float width, const float height)
 
 Texture::~Texture()
 {
+	if (image != nullptr)
+	{
+		SDL_DestroyTexture(image);
 
+	}
 }
 
 void Texture::RenderTexture(SDL_Renderer* renderer)
@@ -24,10 +28,12 @@ SDL_Texture* Texture::GetTexture()
 	return image;
 }
 
-float Texture::GetHeight() {
+float Texture::GetHeight()
+{
 	return h;
 }
 
-float Texture::GetWidth() {
+float Texture::GetWidth()
+{
 	return w;
 }

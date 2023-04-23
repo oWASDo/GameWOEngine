@@ -1,28 +1,43 @@
 
 #include "Game.h"
 #include "SDL_main.h"
+#include <list>
+
+
 
 int SDL_main(int argc, char* argv[])
 {
-	Game game = Game();
-	if (game.InitWindow())
-	{
-		Texture* texture = game.AddTexture("./Image/Box.png");
 
-		GameObject* gameobject = game.AddGameObject("GameObject");
+	Game* game = new Game();
+	if (game->InitWindow())
+	{
+		Texture* texture = game->AddTexture("./Image/Box.png");
+
+		GameObject* gameobject = game->AddGameObject("0");
+		GameObject* gameobject1 = game->AddGameObject("1");
 
 		Renderer* renderer = gameobject->AddRenderer();
 		renderer->AddImage(texture);
+		Renderer* renderer1 = gameobject1->AddRenderer();
+		renderer->AddImage(texture);
 
-		Renderer* r = gameobject->GetComponent<Renderer>();
+		//Renderer* r = GET_COMPONENT_AS_POINTER_BY_TYPE(gameobject, Renderer);
 
+		//gameobject->RemoveComponent(r);
 
-		game.Perform();
+		game->RemoveGameObject(gameobject1);
+
+		game->Perform();
 
 	}
-	game.Clean();
+	int errorCode = game->GetErroroCode();
+	game->Clean();
 
-	return 0;
+	delete game;
+
+	int i = 0;
+
+	return errorCode;
 
 }
 

@@ -3,6 +3,7 @@
 
 Transform::Transform()
 {
+	componentTypeName = "Renderer";
 	position = Vector2();
 	scale = Vector2(1.0f, 1.0f);
 	rotation = 0.0f;
@@ -10,17 +11,6 @@ Transform::Transform()
 
 Transform::~Transform()
 {
-}
-
-
-void Transform::Update() {
-
-	/*float f = scale.GetX();
-
-	f += 0.0001;
-
-	scale.SetX(f);*/
-
 }
 
 

@@ -3,16 +3,18 @@
 
 #include "Exporter.h"
 #include <iostream>
-#include <vector>
-#include "Component.h"
-#include "Transform.h"
-
+#include <list>
 
 #include "Game.h"
+#include "Transform.h"
 #include "Renderer.h"
 
+
 class Game;
+class Component;
 class Renderer;
+class Transform;
+
 
 class ENGIE_EXPORTS GameObject
 {
@@ -23,43 +25,39 @@ public:
 	~GameObject();
 
 	void AddComponent(Component* newComponent);
+	void RemoveComponent(Component* componentToDelete);
+
 	Renderer* AddRenderer();
 	Transform* AddTransform();
 
 	void Update();
+	void DeleteComponent();
+	void DeleteAllComponent();
 
 	void AddGameOwner(Game* newGame);
 
-	//template<class T = Component>
-	//T* GetComponent();
-
-
 	template<class T = Component>
-	T* GetComponent()
-	{
-		const char* name = typeid(T).name();
-
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			if (typeid(T) == typeid(*components.at(i)))
-			{
-				return dynamic_cast<T*>(components.at(i));
-			}
-
-		}
-
-		std::cout << name << std::endl;
-
-		return nullptr;
-
-	}
+	T* GetComponent();
 
 	std::string name;
 
+	Component* GetComponent(const char* name);
 private:
-	std::vector<Component*> components;
+
+
+
+	std::list<Component*> components;
+	std::list<Component*> componentsToDelete;
 	Renderer* rend;
 	Transform* transf;
 	Game* game;
+
+	bool haveRenderer;
+
 };
 
+#define GET_COMPONENT_AS_POINTER_BY_TYPE(gameobject_,type_) \
+dynamic_cast<type_*>(gameobject_->GetComponent(#type_));
+
+#define GET_COMPONENT_AS_POINTER_BY_NAME(gameobject_,type_,name_) \
+dynamic_cast<type_*>(gameobject_->GetComponent(name_));

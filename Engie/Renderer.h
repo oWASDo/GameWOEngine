@@ -1,10 +1,11 @@
 #pragma once
 
-
 #include "SDL.h"
 #include "Texture.h"
 #include "Transform.h"
 
+class Renderer;
+class Transform;
 
 class ENGIE_EXPORTS Renderer : public Component
 {
@@ -16,11 +17,11 @@ public:
 
 	~Renderer();
 
-	void Init() override;
+	void Init();
 
-	void Start() override;
-	
-	void Update() override;
+	void Start();
+
+	void Update();
 
 	void AddImage(Texture* newTexture);
 
@@ -38,6 +39,5 @@ private:
 
 	SDL_Renderer* rend;
 
-	
-
 };
+

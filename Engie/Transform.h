@@ -9,7 +9,6 @@ public:
 	Transform();
 	~Transform();
 
-	void Update() override;
 
 	Vector2 GetPosition();
 	float GetRotation();

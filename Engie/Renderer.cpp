@@ -6,13 +6,17 @@
 
 Renderer::Renderer()
 {
+	componentTypeName = "Renderer";
 	texture = nullptr;
 	rend = nullptr;
 	UV_Position = Vector2(0.0f, 0.0f);
 	UV_Scale = Vector2(1.0f, 1.0f);
 }
 
-Renderer::~Renderer() {}
+Renderer::~Renderer() 
+{
+
+}
 
 void Renderer::Init() {}
 
@@ -20,7 +24,11 @@ void Renderer::Start() {}
 
 void Renderer::Update()
 {
+	if (texture == nullptr) { return; }
+
 	SDL_Texture* t = texture->GetTexture();
+
+	if (t == nullptr) { return; }
 
 	Vector2 pos = transform->GetPosition();
 	Vector2 scale = transform->GetScale();
@@ -43,7 +51,7 @@ void Renderer::Update()
 	position.h = h * UV_Scale.GetY();
 
 	SDL_RenderCopy(rend, t, &position, &size);
-	//SDL_RenderCopy(rend, t, nullptr, &size);
+
 }
 
 void Renderer::AddImage(Texture* newTexture)
