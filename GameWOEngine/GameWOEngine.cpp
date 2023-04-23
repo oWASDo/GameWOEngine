@@ -8,6 +8,7 @@
 int SDL_main(int argc, char* argv[])
 {
 	Game* game = new Game();
+	int errorCode = 0;
 	if (game->InitWindow())
 	{
 		Player* p = new Player();
@@ -15,9 +16,9 @@ int SDL_main(int argc, char* argv[])
 
 		game->Perform();
 
+		int errorCode = game->GetErroroCode();
+		game->Clean();
 	}
-	int errorCode = game->GetErroroCode();
-	game->Clean();
 
 	delete game;
 
