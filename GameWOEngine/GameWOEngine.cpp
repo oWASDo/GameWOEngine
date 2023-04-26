@@ -9,7 +9,7 @@ int SDL_main(int argc, char* argv[])
 {
 	Game* game = new Game();
 	int errorCode = 0;
-	if (game->InitWindow())
+	if (game->InitWindow("Title", 1280, 760))
 	{
 		Player* p = new Player();
 		game->AddGameObject(p);

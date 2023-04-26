@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Loader.h"
 #include "Utils.h" 
+#include "Control.h"
 
 Game::Game()
 {
@@ -30,11 +31,15 @@ Game::~Game()
 
 }
 
-bool Game::InitWindow()
+bool Game::InitWindow(const char* gameName, unsigned int width, unsigned int height)
 {
-
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 760, SDL_WINDOW_SHOWN);
+
+	ww = width;
+	wh = height;
+	name = gameName;
+
+	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_SHOWN);
 
 	if (window != nullptr)
 	{
@@ -73,6 +78,7 @@ void Game::Update() {
 
 	Debug();
 	DeleteGameobject();
+	Control::FreeKeysLists();
 
 }
 
@@ -95,7 +101,7 @@ void Game::Render() {
 float Game::delta = 0;
 
 void Game::Time() {
-	
+
 	float tick_time = SDL_GetTicks();
 	delta = tick_time - last_tick_time;
 	last_tick_time = tick_time;
@@ -112,7 +118,32 @@ void Game::HandleEvent()
 		isRunning = false;
 		break;
 
-	default:
+	case SDL_KEYDOWN:
+		Control::PressKeyBind(event.key.keysym.scancode);
+		break;
+
+	case SDL_KEYUP:
+		Control::ReleeseKeyBind(event.key.keysym.scancode);
+		break;
+
+	case SDL_MOUSEBUTTONDOWN:
+		Control::ReleeseKeyBind(0);
+		break;
+
+	case SDL_MOUSEBUTTONUP:
+		Control::ReleeseKeyBind(1);
+		break;
+
+	case SDL_MOUSEWHEEL:
+		Control::SetMouseWheel(event.wheel.y);
+		break;
+
+	case SDL_MOUSEMOTION:
+		Control::SetMousePos(event.motion.x, event.motion.y);
+		float xxx = event.motion.x; float yyy = event.motion.y;
+		float wxx = ww; float wyy = wh;
+		Control::SetMousePosNormalized(xxx / wxx, yyy / wyy);
+		Control::SetMousePosDir(event.motion.xrel, event.motion.yrel);
 		break;
 
 	}

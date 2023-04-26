@@ -23,7 +23,7 @@ public:
 
 	~Game();
 
-	bool InitWindow();
+	bool InitWindow(const char* gameName, unsigned int width, unsigned int height);
 
 	void Update();
 
@@ -61,8 +61,6 @@ public:
 	void SetErroroCode(int newErrorCode);
 	int GetErroroCode();
 
-	//SDL_Texture* LoadImg();
-
 	static float GetDeltaTime() {
 		return delta;
 	}
@@ -70,6 +68,10 @@ public:
 private:
 
 	SDL_Window* window;
+
+	unsigned int ww;
+	unsigned int wh;
+	const char* name;
 
 	SDL_Renderer* renderer;
 
