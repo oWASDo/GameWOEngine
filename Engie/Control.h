@@ -119,9 +119,11 @@ public:
 
 	static bool GetKeyDown(Keys key);
 	static bool GetKeyUp(Keys key);
-	static Vector2 GetKeyMousePos(Keys key);
-	static Vector2 GetKeyMousePosNormalized(Keys key);
-	static Vector2 GetKeyMouseDir(Keys key);
+	static Vector2 GetKeyMousePos();
+	static Vector2 GetKeyMousePosNormalized();
+	static Vector2 GetKeyMouseDir();
+	static float GetKeyWheelDir();
+
 
 
 private:

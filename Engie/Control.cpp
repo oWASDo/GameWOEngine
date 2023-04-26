@@ -33,19 +33,23 @@ bool Control::GetKeyUp(Keys key)
 	return false;
 }
 
-Vector2 Control::GetKeyMousePos(Keys key)
+Vector2 Control::GetKeyMousePos()
 {
 	return mousePos;
 }
 
-Vector2 Control::GetKeyMousePosNormalized(Keys key)
+Vector2 Control::GetKeyMousePosNormalized()
 {
 	return mousePosNormalized;
 }
 
-Vector2 Control::GetKeyMouseDir(Keys key)
+Vector2 Control::GetKeyMouseDir()
 {
 	return mousePosDir;
+}
+float Control::GetKeyWheelDir()
+{
+	return wheelDir;
 }
 
 
