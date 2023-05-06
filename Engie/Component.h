@@ -20,16 +20,24 @@ public:
 
 	const char* GetTypeName();
 
+	void SetActive(bool newActive);
 
+	bool GetActive();
+
+	void* GetGameObject();
+	
 protected:
 
 	const char* componentTypeName;
 
 	void* gameObjectOwner;
+
 	void SetGameObject(void* newGameObject);
 
 private:
 
+	bool active;
 
 };
 
+#define GET_GAMEOBJECT_OWNER 1

@@ -19,6 +19,7 @@ GameObject::GameObject()
 	rend = nullptr;
 	transf = nullptr;
 	game = nullptr;
+	active = true;
 }
 
 GameObject::~GameObject()
@@ -50,6 +51,7 @@ Renderer* GameObject::AddRenderer()
 	if (rend == nullptr)
 	{
 		Transform* t = AddTransform();
+		transf = t;
 		rend = new Renderer();
 		components.emplace_back(rend);
 		game->AddRenderComponent(rend);
@@ -86,10 +88,13 @@ void GameObject::Update()
 		{
 			game->SetIsRunning(false);
 			game->SetErroroCode(-5);
-			std::cout << "The new Component that you use don't are filled int constructor" << std::endl;
+			std::cout << "The new Component that you use don't have a filled name" << std::endl;
 		}
-		c->Update();
+		if (c->GetActive() && c->componentTypeName != "Renderer")
+		{
+			c->Update();
 
+		}
 	}
 }
 
@@ -168,6 +173,17 @@ T* GameObject::GetComponent()
 void GameObject::Start()
 {
 
+}
+
+void GameObject::SetActive(bool newActive)
+{
+
+	active = newActive;
+}
+
+bool GameObject::GetActive()
+{
+	return active;
 }
 
 void GameObject::Init()

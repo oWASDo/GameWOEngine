@@ -9,6 +9,8 @@ Component::Component()
 {
 	componentTypeName = "";
 	gameObjectOwner = nullptr;
+	active = true;
+
 }
 
 Component::~Component()
@@ -37,8 +39,25 @@ const char* Component::GetTypeName()
 
 }
 
+void Component::SetActive(bool newActive)
+{
+	active = newActive;
+}
+
+bool Component::GetActive()
+{
+	return active;
+}
+
 
 void Component::SetGameObject(void* newGameObject)
 {
 	gameObjectOwner = newGameObject;
 }
+
+
+void* Component::GetGameObject()
+{
+	return gameObjectOwner;
+}
+

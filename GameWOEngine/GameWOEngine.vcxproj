@@ -167,7 +167,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletLogic.cpp" />
+    <ClCompile Include="Crosshair.cpp" />
     <ClCompile Include="GameWOEngine.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +181,15 @@
     <Image Include="Image\Box.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Image\bulletSmall.png" />
     <Image Include="Image\Character.png" />
+    <Image Include="Image\Crosshair.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletLogic.h" />
+    <ClInclude Include="Crosshair.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

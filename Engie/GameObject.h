@@ -50,6 +50,14 @@ public:
 
 	Texture* AddTexture(const char* filePath);
 
+	Transform* transf;
+	Renderer* rend;
+
+
+	void SetActive(bool newActive);
+	bool GetActive();
+
+
 protected:
 	virtual void Init();
 
@@ -59,11 +67,11 @@ private:
 
 	std::list<Component*> components;
 	std::list<Component*> componentsToDelete;
-	Renderer* rend;
-	Transform* transf;
 	Game* game;
 
 	bool haveRenderer;
+
+	bool active;
 
 };
 

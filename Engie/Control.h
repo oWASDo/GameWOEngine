@@ -108,7 +108,7 @@ enum Keys
 	RSHIFT = 229
 };
 
-class Control
+class ENGIE_EXPORTS Control
 {
 public:
 
@@ -119,6 +119,8 @@ public:
 
 	static bool GetKeyDown(Keys key);
 	static bool GetKeyUp(Keys key);
+	static bool GetKeyPressed(Keys key);
+
 	static Vector2 GetKeyMousePos();
 	static Vector2 GetKeyMousePosNormalized();
 	static Vector2 GetKeyMouseDir();
@@ -127,6 +129,7 @@ public:
 
 
 private:
+	static std::list<Keys> keyDown;
 	static std::list<Keys> keyPress;
 	static std::list<Keys> keyRelesed;
 

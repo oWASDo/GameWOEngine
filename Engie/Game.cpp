@@ -10,7 +10,7 @@ Game::Game()
 	errorCode = 0;
 	window = nullptr;
 	renderer = nullptr;
-
+	staticGame = this;
 }
 
 Game::~Game()
@@ -41,6 +41,8 @@ bool Game::InitWindow(const char* gameName, unsigned int width, unsigned int hei
 
 	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_SHOWN);
 
+
+
 	if (window != nullptr)
 	{
 		renderer = SDL_CreateRenderer(window, -1, 0);
@@ -64,8 +66,11 @@ void Game::Update() {
 	{
 
 		GET_LIST_ELEMENT2(gameObject, GameObject*, i, g);
-		g->Update();
+		if (g->GetActive() == true)
+		{
+			g->Update();
 
+		}
 	}
 
 	for (size_t i = 0; i < gameObject.size(); i++)
@@ -90,8 +95,11 @@ void Game::Render() {
 	for (size_t i = 0; i < renderers.size(); i++)
 	{
 		GET_LIST_ELEMENT2(renderers, Renderer*, i, r);
-		r->Update();
-
+		GameObject* g = (GameObject*)r->GetGameObject();
+		if (g->GetActive())
+		{
+			r->Update();
+		}
 	}
 
 	SDL_RenderPresent(renderer);
@@ -100,10 +108,12 @@ void Game::Render() {
 
 float Game::delta = 0;
 
+Game* Game::staticGame = nullptr;
+
 void Game::Time() {
 
 	float tick_time = SDL_GetTicks();
-	delta = tick_time - last_tick_time;
+	delta = (tick_time - last_tick_time) / 1000.0f;
 	last_tick_time = tick_time;
 
 }
@@ -117,7 +127,7 @@ void Game::HandleEvent()
 	case SDL_QUIT:
 		isRunning = false;
 		break;
-
+#pragma region Keyboard_mouse
 	case SDL_KEYDOWN:
 		Control::PressKeyBind(event.key.keysym.scancode);
 		break;
@@ -127,7 +137,7 @@ void Game::HandleEvent()
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
-		Control::ReleeseKeyBind(0);
+		Control::PressKeyBind(0);
 		break;
 
 	case SDL_MOUSEBUTTONUP:
@@ -145,6 +155,7 @@ void Game::HandleEvent()
 		Control::SetMousePosNormalized(xxx / wxx, yyy / wyy);
 		Control::SetMousePosDir(event.motion.xrel, event.motion.yrel);
 		break;
+#pragma endregion
 
 	}
 	SDL_UpdateWindowSurface(window);
@@ -220,6 +231,26 @@ void Game::AddGameObject(GameObject* newGameObject)
 	newGameObject->Init();
 
 }
+
+GameObject* Game::AddGameObjectS(const char* name)
+{
+	return staticGame->AddGameObject(name);
+
+}
+
+void Game::AddGameObjectS(GameObject* newGameObject)
+{
+	staticGame->AddGameObject(newGameObject);
+
+}
+
+void Game::RemoveGameObjectS(GameObject* gameObject)
+{
+
+	staticGame->gameObjectToRemove.push_back(gameObject);
+
+}
+
 
 void Game::RemoveTexture(Texture* texture)
 {

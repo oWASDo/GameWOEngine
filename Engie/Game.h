@@ -65,7 +65,13 @@ public:
 		return delta;
 	}
 
+	static GameObject* AddGameObjectS(const char* name);
+	static void AddGameObjectS(GameObject* newGameObject);
+	static void RemoveGameObjectS(GameObject* gameObject);
+
 private:
+
+	static Game* staticGame;
 
 	SDL_Window* window;
 

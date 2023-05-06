@@ -11,7 +11,7 @@ Control::~Control()
 
 bool Control::GetKeyDown(Keys key)
 {
-	for (Keys k : keyPress)
+	for (Keys k : keyDown)
 	{
 		if (k == key)
 		{
@@ -24,6 +24,18 @@ bool Control::GetKeyDown(Keys key)
 bool Control::GetKeyUp(Keys key)
 {
 	for (Keys k : keyRelesed)
+	{
+		if (k == key)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Control::GetKeyPressed(Keys key)
+{
+	for (Keys k : keyPress)
 	{
 		if (k == key)
 		{
@@ -53,6 +65,7 @@ float Control::GetKeyWheelDir()
 }
 
 
+std::list<Keys> Control::keyDown;
 std::list<Keys> Control::keyPress;
 std::list<Keys> Control::keyRelesed;
 
@@ -63,16 +76,19 @@ float Control::wheelDir = 0.0f;
 
 void Control::PressKeyBind(int keyPressed)
 {
-	//Keys k = (Keys)keyPressed;
 	Keys k = static_cast<Keys>(keyPressed);
+	keyDown.emplace_back(k);
+
 	keyPress.emplace_back(k);
 }
 
 void Control::ReleeseKeyBind(int keyPressed)
 {
-	//Keys k = (Keys)keyPressed;
 	Keys k = static_cast<Keys>(keyPressed);
 	keyRelesed.emplace_back(k);
+
+	keyPress.remove(k);
+
 }
 
 void Control::SetMousePos(float x, float y)
@@ -100,7 +116,7 @@ void Control::SetMouseWheel(float x)
 
 void Control::FreeKeysLists()
 {
-	keyPress.clear();
+	keyDown.clear();
 	keyRelesed.clear();
 	mousePosDir = Vector2(0.0f, 0.0f);
 	wheelDir = 0.0f;

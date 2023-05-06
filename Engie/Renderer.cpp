@@ -10,12 +10,12 @@ Renderer::Renderer()
 	transform = nullptr;
 	texture = nullptr;
 	rend = nullptr;
-
 	UV_Position = Vector2(0.0f, 0.0f);
 	UV_Scale = Vector2(1.0f, 1.0f);
+
 }
 
-Renderer::~Renderer() 
+Renderer::~Renderer()
 {
 
 }
@@ -26,6 +26,7 @@ void Renderer::Start() {}
 
 void Renderer::Update()
 {
+
 	if (texture == nullptr) { return; }
 
 	SDL_Texture* t = texture->GetTexture();
@@ -33,15 +34,17 @@ void Renderer::Update()
 	if (t == nullptr) { return; }
 
 	Vector2 pos = transform->GetPosition();
+	Vector2 pivot = transform->GetPivot();
 	Vector2 scale = transform->GetScale();
+	float rotation = transform->GetRotation();
 
 	float w = texture->GetWidth();
 	float h = texture->GetHeight();
 
 	//Size and position
 	SDL_Rect size;
-	size.x = pos.GetX();
-	size.y = pos.GetY();
+	size.x = pos.GetX() + pivot.GetX();
+	size.y = pos.GetY() + pivot.GetY();
 	size.w = w * scale.GetX();
 	size.h = h * scale.GetY();
 
@@ -52,7 +55,14 @@ void Renderer::Update()
 	position.w = w * UV_Scale.GetX();
 	position.h = h * UV_Scale.GetY();
 
-	SDL_RenderCopy(rend, t, &position, &size);
+	SDL_Point p;
+	p.x = pivot.GetX();
+	p.y = pivot.GetY();
+
+
+	//SDL_RenderCopy(rend, t, &position, &size);
+	SDL_RenderCopyEx(rend, t, &position, &size, rotation, &p, transform->GetFlip());
+
 
 }
 

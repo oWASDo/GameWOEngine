@@ -15,6 +15,22 @@ public:
 	void SetX(float value);
 	void SetY(float value);
 
+	Vector2 operator+(Vector2 b);
+
+	Vector2 operator-(Vector2 b);
+
+	Vector2 operator*(Vector2 b);
+
+	Vector2 operator*(float b);
+
+	Vector2 operator/(Vector2 b);
+
+	Vector2 operator/(float b);
+
+	float Magnitude();
+	Vector2 Normalize();
+	float GetRotation();
+
 private:
 
 	float x;
